@@ -1,4 +1,5 @@
 import React from "react";
+import Map from './components/map';
 
 class Main extends React.Component {
     constructor (props) {
@@ -6,6 +7,8 @@ class Main extends React.Component {
 
         this.state = {
             search: null,  //this search needs to match the other commented search items so that state is updated
+            location:  null,
+            map:  null,
         };
     }
     
@@ -18,6 +21,8 @@ class Main extends React.Component {
         let search = input.value;  //value from the form
         this.setState ({
             search,  //this search needs to match the other commented search items so that state is updated
+            // location:  [need to set to the actual data source]
+            mapSrc:  mapLink,
         });
     }
     
@@ -40,6 +45,10 @@ class Main extends React.Component {
 
                     <div>
                         Searched location is {this.state.search}  {/* this search needs to match the other commented search items so that state is updated*/}
+                        <Map
+                        location = {this.state.location}
+                        src = {this.state.mapSrc}
+                        />
                     </div>
                 }
             </main>

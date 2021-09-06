@@ -35,9 +35,13 @@ class Main extends React.Component {
                         <button type = "submit">Explore!!</button>
                     </div>
                 </form>
-                <div>
-                    Searched location is {this.state.search}  {/* this search needs to match the other commented search items so that state is updated*/}
-                </div>
+
+                {this.state.search &&  /*conditional rendering - if the first thing exists, show the second.  If the first does not exist, show the first.  This one is saying if we have a search, then show the Searched location is with the location.  Otherwise, do not show that statement*/
+
+                    <div>
+                        Searched location is {this.state.search}  {/* this search needs to match the other commented search items so that state is updated*/}
+                    </div>
+                }
             </main>
         )
     }

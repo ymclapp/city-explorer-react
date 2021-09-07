@@ -1,6 +1,6 @@
 import React from "react";
-import Map from './components/map';
-import Restaurants from './components/restaurants';
+// import Map from './components/map';
+// import Restaurants from './components/restaurants';
 // import Restaurants from [need the url];
 // import mapLink from [need the url];
 import axios from 'axios';
@@ -25,7 +25,7 @@ class Main extends React.Component {
         this.setState ({
             q,  //this q needs to match the other commented q items so that state is updated
             location:  null,
-            mapSrc:  mapLink,
+            // mapSrc:  mapLink,
             // restaurants: [need to set to the actual data source],
         });
 
@@ -67,14 +67,14 @@ class Main extends React.Component {
                         <p>Display Name:  {this.state.location.display_name}</p>
                         :  <p>Loading...</p>    
                         }
-                        <Map
+                        {/* <Map
                         location = {this.state.location}
                         src = {this.state.mapSrc}
-                        />
-                        <Restaurants
+                        /> */}
+                        {/* <Restaurants
                         location = {this.state.location}
                         restaurants = {this.state.restaurants}
-                        />
+                        /> */}
                     </div>
                 }
             </main>

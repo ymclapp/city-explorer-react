@@ -4,33 +4,48 @@ import Map from './components/map';
 import Restaurants from './components/restaurants';
 // import Restaurants from [need the url];
 // import mapLink from [need the url];
+import axios from 'axios';
 
 class Main extends React.Component {
-    constructor (props) {
-        super (props);
-
-        this.state = {
-            search: null,  //this search needs to match the other commented search items so that state is updated
-            location:  null,
-            map:  null,
-            restaurants: null,
+    state = {
+        q: null,  //this q needs to match the other commented search items so that state is updated
+        location:  null,
+        mapSrc:  null,
+        restaurants: null,
         };
     }
     
-    handleLocationSearch = submitEvent => {
+    handleLocationSearch =  async submitEvent => {
         submitEvent.preventDefault();
 
-        console.log('submitted', submitEvent.target);
+        console.log('submitted!!', submitEvent.target);
         let form = submitEvent.target;
-        let input = form.elements.search;  //search is the name of the input element below.  this search needs to match the other commented search items so that state is updated
-        let search = input.value;  //value from the form
+        let input = form.elements.q;  //q is the name of the input element below.  this q needs to match the other commented q items so that state is updated
+        let q = input.value;  //value from the form
+        console.log(q);
+        
         this.setState ({
-            search,  //this search needs to match the other commented search items so that state is updated
-            // location:  [need to set to the actual data source],
+            q,  //this q needs to match the other commented q items so that state is updated
+            location:  null,
             mapSrc:  mapLink,
             // restaurants: [need to set to the actual data source],
         });
-    }
+
+        const url = `https://us1.locationiq.com/v1/search.php`;
+        const response = await axios.get(url, {
+            params:  {
+                key:  process.env.REACT_APP_LOCATION_KEY,  //needs to match .env and it has to start with REACT_APP_ then the name you want it to have
+                q,
+                format:  'json',
+            }  
+        });
+
+        console.log(response);
+
+        const location = response.data[0];
+        this.setState({location});
+    };
+
     
     
     render () {
@@ -39,18 +54,21 @@ class Main extends React.Component {
                 <form onSubmit = {this.handleLocationSearch}>
                     <label>
                         Search for a location:
-                        {' '} {/*adds a space between the label and the input box - have to do a comment this way when we are inside of the jsx such as render*/}
-                        <input type = "text" name = "search" placeholder = "location" />  {/* this search needs to match the other commented search items so that state is updated*/}
+                        {' '} 
+                        <input type = "text" name = "q" placeholder = "location" />
                     </label>
                     <div>
                         <button type = "submit">Explore!!</button>
                     </div>
                 </form>
 
-                {this.state.search &&  /*conditional rendering - if the first thing exists, show the second.  If the first does not exist, show the first.  This one is saying if we have a search, then show the Searched location is with the location.  Otherwise, do not show that statement*/
-
+                {this.state.q &&
                     <div>
-                        Searched location is {this.state.search}  {/* this search needs to match the other commented search items so that state is updated*/}
+                        Searched location is {this.state.q}
+                        {this.state.location ?
+                        <p>Display Name:  {this.state.location.display_name}</p>
+                        :  <p>Loading...</p>    
+                        }
                         <Map
                         location = {this.state.location}
                         src = {this.state.mapSrc}
@@ -64,6 +82,5 @@ class Main extends React.Component {
             </main>
         )
     }
-}
 
 export default Main;

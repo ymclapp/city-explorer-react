@@ -20,7 +20,7 @@ class App extends React.Component {
         //assign q in state to be value of q
         this.setState({q, location: null});  //clears the location info while searching for a new one
 
-        const url = `https://us1.locationiq.com/v1/reverse.php`;
+        const url = `https://us1.locationiq.com/v1/search.php`;
         const response = await axios.get(url, {
             params: {
                 key: process.env.REACT_APP_LOCATION_KEY,  //needs to match .env and it has to start with REACT_APP_ then the name you want it to have

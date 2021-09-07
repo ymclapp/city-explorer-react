@@ -1,6 +1,5 @@
 import React from "react";
 import Map from './components/map';
-// import Location from [need the url];
 import Restaurants from './components/restaurants';
 // import Restaurants from [need the url];
 // import mapLink from [need the url];
@@ -13,7 +12,6 @@ class Main extends React.Component {
         mapSrc:  null,
         restaurants: null,
         };
-    }
     
     handleLocationSearch =  async submitEvent => {
         submitEvent.preventDefault();
@@ -82,5 +80,6 @@ class Main extends React.Component {
             </main>
         )
     }
+}
 
 export default Main;

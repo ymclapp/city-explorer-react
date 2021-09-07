@@ -64,7 +64,9 @@ class Main extends React.Component {
                     <div>
                         Searched location is {this.state.q}
                         {this.state.location ?
-                        <p>Display Name:  {this.state.location.display_name}</p>
+                        <p>Display Name:  {this.state.location.display_name}<br />
+                        Longitude:  {this.state.location.lat}<br />
+                        Latitude:  {this.state.location.lon}</p>
                         :  <p>Loading...</p>    
                         }
                         {/* <Map

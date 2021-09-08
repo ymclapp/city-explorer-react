@@ -1,15 +1,15 @@
 import React from "react";
-// import Map from './components/map';
+import Map from './map';
 // import Restaurants from './components/restaurants';
 // import Restaurants from [need the url];
-// import mapLink from [need the url];
+// import mapLink from 'https://maps.locationiq.com/v3/staticmap';
 import axios from 'axios';
 
 class Main extends React.Component {
     state = {
         q: null,  //this q needs to match the other commented search items so that state is updated
         location:  null,
-        mapSrc:  null,
+        // mapSrc:  null,
         restaurants: null,
         };
     
@@ -69,11 +69,8 @@ class Main extends React.Component {
                         Latitude:  {this.state.location.lon}</p>
                         :  <p>Loading...</p>    
                         }
-                        {/* <Map
-                        location = {this.state.location}
-                        src = {this.state.mapSrc}
-                        /> */}
-                        {/* <Restaurants
+                        <Map location = {this.state.location}/>
+                       {/* <Restaurants
                         location = {this.state.location}
                         restaurants = {this.state.restaurants}
                         /> */}

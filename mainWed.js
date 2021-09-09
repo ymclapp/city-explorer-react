@@ -11,6 +11,7 @@ class Main extends React.Component {
     state = {
         q: null,  //this q needs to match the other commented search items so that state is updated
         location:  null,
+        // mapSrc:  null,
         restaurants: null,
         };
     
@@ -26,6 +27,7 @@ class Main extends React.Component {
         this.setState ({
             q,  //this q needs to match the other commented q items so that state is updated
             location:  null,
+            // mapSrc:  mapLink,
             // restaurants: [need to set to the actual data source],
         });
 

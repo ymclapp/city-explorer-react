@@ -4,6 +4,7 @@ import Map from './map';
 // import Restaurants from [need the url];
 // import mapLink from 'https://maps.locationiq.com/v3/staticmap';
 import axios from 'axios';
+import Weather from './weather';
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -43,13 +44,23 @@ class Main extends React.Component {
         const location = response.data[0];
         this.setState({location});
 
-        this.getWeather();
+        this.getWeather(location);
     };
 
-    getWeather = async () => {
-        let response = await axios.get(`${apiURL}/weather`);
+    getWeather = async (location) => {
+        const response = await axios.get(`${apiURL}/weather`, {
+        params:  {
+            key:  process.env.REACT_APP_WEATHER_KEY,  //needs to match .env and it has to start with REACT_APP_ then the name you want it to have
+            lat:  location.lat,
+            lon:  location.lon,
+        }
+    });
         console.log(response);
-    }
+
+        this.setState({
+            weather:  response.data,
+        });
+    };
     
     render () {
         return (
@@ -65,6 +76,23 @@ class Main extends React.Component {
                     </div>
                 </form>
 
+                <div>
+                    <h2>The weather goes here</h2>
+                    {this.state.weather &&
+                        <p>  Forecast:
+                            {this.state.weather.map(
+                                (weatherData, index) => (
+                                    <p>Description:
+                                        {weatherData}
+                                    </p>
+
+                                )
+                            )}
+                            
+                        </p>
+                }
+                </div>
+                
                 {this.state.q &&
                     <div>
                         Searched location is {this.state.q}
@@ -75,6 +103,8 @@ class Main extends React.Component {
                         :  <p>Loading...</p>    
                         }
                         <Map location = {this.state.location}/>
+                        {/* <Weather location = {this.state.weather}/> */}
+                       {/*} <Weather 
                        {/* <Restaurants
                         location = {this.state.location}
                         restaurants = {this.state.restaurants}

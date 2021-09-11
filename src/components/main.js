@@ -82,23 +82,23 @@ class Main extends React.Component {
                     </div>
                 </form>
 
-                <div>
-                    {this.state.weatherData &&
-                        <ul>
-                            <li>
-                                {this.state.weatherData[0].time }
-                            </li>
-                        </ul>
-                    }
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+                    
+                    {this.state.weatherData && this.state.weatherData.map(weather => (
+                        <div>
+                            <strong>The weather forecast for {this.state.location.display_name} is:</strong><br />
+                            <strong>Forecast Date:</strong>  {this.state.weatherData[0].time }<br />
+                            <strong>Forecast Description:</strong>  {this.state.weatherData[0].description}<br />
+    
+                        </div>
+                    ))}
+                        
                 </div>
-
-
-                
+               
                 {this.state.q &&
                     <div>
-                        Searched location is {this.state.q}
                         {this.state.location ?
-                        <p>Display Name:  {this.state.location.display_name}<br />
+                        <p>Formal Location Name:  {this.state.location.display_name}<br />
                         Longitude:  {this.state.location.lat}<br />
                         Latitude:  {this.state.location.lon}</p>
                         :  <p>Loading...</p>    

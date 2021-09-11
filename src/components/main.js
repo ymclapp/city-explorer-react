@@ -86,7 +86,7 @@ class Main extends React.Component {
                     {this.state.weatherData &&
                         <ul>
                             <li>
-                                {this.state.weatherData[0]}
+                                {this.state.weatherData[0].time }
                             </li>
                         </ul>
                     }

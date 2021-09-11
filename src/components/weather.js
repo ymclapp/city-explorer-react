@@ -1,4 +1,3 @@
-import { constants } from 'buffer';
 import React from 'react';
 
 const key = process.env.REACT_APP_WEATHER_KEY;
@@ -9,12 +8,17 @@ class Weather extends React.Component {
     
     render () {
         
-        let location
+        let forecast = this.props.forecast;
+
         if(!location) return null;  //skips if no location
 
-        let src = `${apiUrl}?key=${key}&center=${location.lat},${location.lon}&zoom=11`;
         
         return (
+            <ul>
+                {forecast.map (
+                    forecastDaily, 
+                )}
+            </ul>
             <section id = "weather">
                 <h3>Weather in {this.props.location.formatted_query}</h3>
                 <ul>
@@ -30,3 +34,5 @@ class Weather extends React.Component {
         )
     }
 }
+
+export default Weather;

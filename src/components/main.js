@@ -1,10 +1,10 @@
+import axios from 'axios';
 import React from "react";
 import Map from './map';
 // import Restaurants from './components/restaurants';
 // import Restaurants from [need the url];
 // import mapLink from 'https://maps.locationiq.com/v3/staticmap';
-import axios from 'axios';
-import Weather from './weather';
+// import Weather from './weather';
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -22,6 +22,7 @@ class Main extends React.Component {
         let form = submitEvent.target;
         let input = form.elements.q;  //q is the name of the input element below.  this q needs to match the other commented q items so that state is updated
         let q = input.value;  //value from the form
+        
         console.log(q);
         
         this.setState ({
@@ -43,28 +44,33 @@ class Main extends React.Component {
 
         const location = response.data[0];
         this.setState({location});
+        
+        console.log(this.state.location);  //will help show when setState has finished
 
-        this.getWeather(location);
+        this.getWeather(location);//if you pass location in, then you can do the location.lat below without this.state.location.lat
     };
 
     getWeather = async (location) => {
         const response = await axios.get(`${apiURL}/weather`, {
-        params:  {
-            key:  process.env.REACT_APP_WEATHER_KEY,  //needs to match .env and it has to start with REACT_APP_ then the name you want it to have
-            lat:  location.lat,
-            lon:  location.lon,
-        }
-    });
+            params:  {
+                // key:  process.env.REACT_APP_WEATHER_KEY,  //needs to match .env and it has to start with REACT_APP_ then the name you want it to have
+                q: location.q,
+                lat:  location.lat,
+                lon:  location.lon,
+            },
+        });
         console.log(response);
 
         this.setState({
-            weather:  response.data,
-        });
-    };
+            weatherData:  response.data,
+        })
+        console.log(this.state.weatherData);
+    }
     
     render () {
         return (
             <main>
+                <div>
                 <form onSubmit = {this.handleLocationSearch}>
                     <label>
                         Search for a location:
@@ -77,21 +83,16 @@ class Main extends React.Component {
                 </form>
 
                 <div>
-                    <h2>The weather goes here</h2>
-                    {this.state.weather &&
-                        <p>  Forecast:
-                            {this.state.weather.map(
-                                (weatherData, index) => (
-                                    <p>Description:
-                                        {weatherData}
-                                    </p>
-
-                                )
-                            )}
-                            
-                        </p>
-                }
+                    {this.state.weatherData &&
+                        <ul>
+                            <li>
+                                {this.state.weatherData[0]}
+                            </li>
+                        </ul>
+                    }
                 </div>
+
+
                 
                 {this.state.q &&
                     <div>
@@ -103,14 +104,11 @@ class Main extends React.Component {
                         :  <p>Loading...</p>    
                         }
                         <Map location = {this.state.location}/>
-                        {/* <Weather location = {this.state.weather}/> */}
-                       {/*} <Weather 
-                       {/* <Restaurants
-                        location = {this.state.location}
-                        restaurants = {this.state.restaurants}
-                        /> */}
+                        {/* <Weather forecast = {this.state.weatherData} /> */}
+
                     </div>
                 }
+                </div>
             </main>
         )
     }

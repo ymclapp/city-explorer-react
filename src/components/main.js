@@ -48,7 +48,7 @@ class Main extends React.Component {
         console.log(this.state.location);  //will help show when setState has finished
 
         this.getWeather(location);//if you pass location in, then you can do the location.lat below without this.state.location.lat
-        this.getMovies(location);
+        this.getMovies(q);
     };
 
     getWeather = async (location) => {
@@ -68,10 +68,10 @@ class Main extends React.Component {
         console.log(this.state.weatherData);
     }
 
-    getMovies = async (location) => {
+    getMovies = async (query) => {
         const response = await axios.get(`${apiURL}/movies`, {
             params: {
-                query:  location.q,
+                q: query,
             },
         });
         console.log(response);

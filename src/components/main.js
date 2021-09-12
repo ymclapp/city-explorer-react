@@ -71,7 +71,7 @@ class Main extends React.Component {
     getMovies = async (location) => {
         const response = await axios.get(`${apiURL}/movies`, {
             params: {
-                query:  location.q,
+                q:  location.q,
             },
         });
         console.log(response);

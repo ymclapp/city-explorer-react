@@ -48,6 +48,7 @@ class Main extends React.Component {
         console.log(this.state.location);  //will help show when setState has finished
 
         this.getWeather(location);//if you pass location in, then you can do the location.lat below without this.state.location.lat
+        this.getMovies(location);
     };
 
     getWeather = async (location) => {
@@ -65,6 +66,20 @@ class Main extends React.Component {
             weatherData:  response.data,
         })
         console.log(this.state.weatherData);
+    }
+
+    getMovies = async (location) => {
+        const response = await axios.get(`${apiURL}/movies`, {
+            params: {
+                query:  location.q,
+            },
+        });
+        console.log(response);
+
+        this.setState({
+            movieData:  response.data,
+        })
+        console.log(this.state.movieData);
     }
     
     render () {
@@ -86,7 +101,7 @@ class Main extends React.Component {
                     
                     {this.state.weatherData && this.state.weatherData.map(weather => (
                         <div>
-                            <strong>The weather forecast for {this.state.location.display_name} is:</strong><br />
+                            <strong>The weather forecast is:</strong>
                             <strong>Forecast Date:</strong>  {this.state.weatherData[0].time }<br />
                             <strong>Forecast Description:</strong>  {this.state.weatherData[0].description}<br />
     
@@ -108,6 +123,22 @@ class Main extends React.Component {
 
                     </div>
                 }
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+                    
+                    {this.state.movieData && this.state.movieData.map(movie => (
+                        <div>
+                            <strong>The movies associated with this location is/are:</strong><br />
+                            <strong>Movie:</strong>  {this.state.movieData[0].title}<br />
+                            <strong>Overview:</strong>  {this.state.movieData[0].overview}<br />
+                            <strong>Average Votes:</strong>  {this.state.movieData[0].vote_average}<br />
+                            <strong>Total Votes:</strong>  {this.state.movieData[0].vote_count}<br />
+                            <strong>Poster URL:</strong>  {this.state.movieData[0].poster_path}<br />
+                            <strong>Popularity:</strong>  {this.state.movieData[0].popularity}<br />
+                            <strong>Released On:</strong>  {this.state.movieData[0].release_date}<br />
+                        </div>
+                    ))}
+                        
                 </div>
             </main>
         )

@@ -97,11 +97,11 @@ class Main extends React.Component {
                     </div>
                 </form>
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
                     
                     {this.state.weatherData && this.state.weatherData.map(weather => (
                         <div>
-                            <strong>The weather forecast is:</strong>
+                            <strong>The weather forecast is:</strong><br />
                             <strong>Forecast Date:</strong>  {this.state.weatherData[0].time }<br />
                             <strong>Forecast Description:</strong>  {this.state.weatherData[0].description}<br />
     
@@ -128,7 +128,7 @@ class Main extends React.Component {
                     
                     {this.state.movieData && this.state.movieData.map(movie => (
                         <div>
-                            <strong>The movies associated with this location is/are:</strong><br />
+                            <strong>The movies associated with this location is/are:</strong>
                             <strong>Movie:</strong>  {this.state.movieData[0].title}<br />
                             <strong>Overview:</strong>  {this.state.movieData[0].overview}<br />
                             <strong>Average Votes:</strong>  {this.state.movieData[0].vote_average}<br />
